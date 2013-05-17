@@ -1,0 +1,35 @@
+ul {
+    list-style: none;
+}
+
+#desktop {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 1280px;
+    height: 720px;
+}
+
+#carousel {
+    position: absolute;
+    bottom: 0;
+    height: 200px;
+    width: 100%;
+    background: gray;
+}
+
+#carousel > ul {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: -webkit-box;
+    -webkit-box-orient: horizontal;
+    padding: 0;
+    margin: 0;
+    -webkit-transition: -webkit-transform .6s;
+}
+
+#carousel > ul > li {
+    width: 256px;
+    height: 168px;
+} 
