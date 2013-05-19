@@ -9,7 +9,8 @@ define(function(require, exports, module) {
 			size: 5,
 			setItem: function($view, data) {
 				// to be implemented
-			}
+			},
+			itemWidth: 200
 		};
 
 	function Carousel(el, options) {
@@ -37,6 +38,8 @@ define(function(require, exports, module) {
 				this.trigger('CurrentIndexChanged', prev, val);
 			}
 		});
+
+		this.$el.html(juicer('<ul>{@each i in range(0, ' + (size + 2) + ')}<li></li>{@/each}</ul>', {}));
 	}
 
 	Carousel.prototype = {
@@ -48,11 +51,13 @@ define(function(require, exports, module) {
 		},
 		to: function(index) {},
 		show: function(list, index) {
-			this.$el.html(juicer('<ul>{@each i in range(0, ' + list.length + ')}<li></li>{@/each}</ul>', {}));
 			this.$el.show();
 		},
 		hide: function() {
 
+		},
+		$: function(selector) {
+			return this.$el.find(selector)
 		}
 	};
 
