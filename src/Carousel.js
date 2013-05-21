@@ -3,6 +3,7 @@ define(function(require, exports, module) {
 	var toString = Object.prototype.toString,
 		EventEmitter = require('./EventEmitter'),
 		juicer = require('juicer'),
+		slice = Array.prototype.slice,
 		defaultOptions = {
 			direction: 'horizon',
 			/* verical or horizon */
@@ -10,7 +11,12 @@ define(function(require, exports, module) {
 			setItem: function($view, data) {
 				// to be implemented
 			},
-			itemWidth: 200
+			itemWidth: 190,
+			gap: 10,
+			position: {
+				x: 0,
+				y: 0
+			}
 		};
 
 	function Carousel(el, options) {
@@ -34,12 +40,19 @@ define(function(require, exports, module) {
 			var prev = this._currentIndex;
 			this._currentIndex = val;
 
+			if (!this.carouselList) {
+				this.dataList.forEach(function() {})
+			}
+
 			if (prev !== val) {
 				this.trigger('CurrentIndexChanged', prev, val);
 			}
 		});
 
-		this.$el.html(juicer('<ul>{@each i in range(0, ' + (size + 2) + ')}<li></li>{@/each}</ul>', {}));
+		this.$el.html(juicer('<ul>{@each i in range(0, ' + (this.size + 2) + ')}<li class="carousel_item"></li>{@/each}</ul>', {}));
+		this.$viewList = slice.call(this.$('.carousel_item').map(function() {
+			return $(this);
+		}));
 	}
 
 	Carousel.prototype = {
@@ -58,6 +71,12 @@ define(function(require, exports, module) {
 		},
 		$: function(selector) {
 			return this.$el.find(selector)
+		},
+		getCurrentDataList: function() {
+			var num = Math.floor(this.size / 2),
+				leftGuard = this.currentIndex - num,
+				rightGuard = this.currentIndex + num;
+			leftGuard < 0 ? this.dataList.slice(leftGuard).concat(this.dataList.slice(0, this.currentIndex)) : this.dataList.slice(leftGuard, this.currentIndex);
 		}
 	};
 
