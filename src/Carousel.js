@@ -30,7 +30,7 @@ define(function(require, exports, module) {
 			this.$el = $(el);
 		}
 
-		this.options = $.extend({}, defaultOptions, options);
+		$.extend(this, defaultOptions, options);
 
 		this.__defineGetter__('currentIndex', function() {
 			return this._currentIndex;
@@ -41,7 +41,9 @@ define(function(require, exports, module) {
 			this._currentIndex = val;
 
 			if (!this.carouselList) {
-				this.dataList.forEach(function() {})
+				this.getCurrentDataList.forEach(function() {
+
+				});
 			}
 
 			if (prev !== val) {
@@ -72,11 +74,19 @@ define(function(require, exports, module) {
 		$: function(selector) {
 			return this.$el.find(selector)
 		},
+		_buildPositionList: function() {
+			this.itemPostionList = [];
+			for (var i = 0; i < (this.size + 2); i++) {
+				this.itemPostionList.push(this.direction == 'horizon' ? [this.position.x + (i - 1) * (this.itemWidth + this.gap), 0] : []);
+			}
+		},
 		getCurrentDataList: function() {
-			var num = Math.floor(this.size / 2),
-				leftGuard = this.currentIndex - num,
-				rightGuard = this.currentIndex + num;
-			leftGuard < 0 ? this.dataList.slice(leftGuard).concat(this.dataList.slice(0, this.currentIndex)) : this.dataList.slice(leftGuard, this.currentIndex);
+			var startIndex = (this.currentIndex - Math.floor(this.size / 2) + this.dataList.length) % this.dataList.length,
+				list = [];
+			for (var i = 0, i < (this.size + 2); i++) {
+				list.push(this.dataList[(startIndex + i) % this.dataList.length]);
+			}
+			return list;
 		}
 	};
 
