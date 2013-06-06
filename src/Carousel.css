@@ -12,10 +12,11 @@ ul {
 
 #carousel {
     position: absolute;
-    bottom: 0;
+    top: 0;
     height: 200px;
     width: 100%;
     background: gray;
+    overflow: hidden;
 }
 
 #carousel > ul {
@@ -30,6 +31,8 @@ ul {
 }
 
 #carousel > ul > li {
-    width: 256px;
-    height: 168px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: red;
 } 

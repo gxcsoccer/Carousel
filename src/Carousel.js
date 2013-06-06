@@ -12,6 +12,7 @@ define(function(require, exports, module) {
 				// to be implemented
 			},
 			itemWidth: 190,
+			itemHeight: 190,
 			gap: 10,
 			position: {
 				x: 0,
@@ -37,12 +38,19 @@ define(function(require, exports, module) {
 		});
 
 		this.__defineSetter__('currentIndex', function(val) {
-			var prev = this._currentIndex;
+			var prev = this._currentIndex,
+				that = this;
 			this._currentIndex = val;
 
 			if (!this.carouselList) {
-				this.getCurrentDataList.forEach(function() {
-
+				this.carouselList = this.getCurrentDataList();
+				this.$viewList.forEach(function($el, index) {
+					that.setItem($el, that.carouselList[index]);
+					$el.css({
+						'-webkit-transform': that.itemPostionList[index],
+						width: that.itemWidth,
+						height: that.itemHeight
+					});
 				});
 			}
 
@@ -55,6 +63,12 @@ define(function(require, exports, module) {
 		this.$viewList = slice.call(this.$('.carousel_item').map(function() {
 			return $(this);
 		}));
+		this.$el.css({
+			width: this.direction == 'horizon' ? ((this.itemWidth + this.gap) * this.size - this.gap) : this.itemWidth,
+			height: this.direction == 'horizon' ? this.itemHeight : ((this.itemHeight + this.gap) * this.size - this.gap)
+		})
+		this._buildPositionList();
+		this.hide();
 	}
 
 	Carousel.prototype = {
@@ -67,9 +81,11 @@ define(function(require, exports, module) {
 		to: function(index) {},
 		show: function(list, index) {
 			this.$el.show();
+			this.dataList = list;
+			this.currentIndex = index || 0;
 		},
 		hide: function() {
-
+			this.$el.hide();
 		},
 		$: function(selector) {
 			return this.$el.find(selector)
@@ -77,13 +93,13 @@ define(function(require, exports, module) {
 		_buildPositionList: function() {
 			this.itemPostionList = [];
 			for (var i = 0; i < (this.size + 2); i++) {
-				this.itemPostionList.push(this.direction == 'horizon' ? [this.position.x + (i - 1) * (this.itemWidth + this.gap), 0] : []);
+				this.itemPostionList.push(this.direction == 'horizon' ? ('translate3d(' + (this.position.x + (i - 1) * (this.itemWidth + this.gap)) + 'px,0,0)') : ('translate3d(0,' + (this.position.y + (i - 1) * (this.itemHeight + this.gap)) + 'px,0)'));
 			}
 		},
 		getCurrentDataList: function() {
-			var startIndex = (this.currentIndex - Math.floor(this.size / 2) + this.dataList.length) % this.dataList.length,
+			var startIndex = (this.currentIndex - Math.floor((this.size + 2) / 2) + this.dataList.length) % this.dataList.length,
 				list = [];
-			for (var i = 0, i < (this.size + 2); i++) {
+			for (var i = 0; i < (this.size + 2); i++) {
 				list.push(this.dataList[(startIndex + i) % this.dataList.length]);
 			}
 			return list;

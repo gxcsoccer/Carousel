@@ -10,7 +10,9 @@ seajs.config({
 define(function(require) {
     var Carousel = require('Carousel'),
         car = new Carousel('carousel', {
-
+            setItem: function($el, data) {
+                $el.text(data);
+            }
         });
 
     car.show([1, 2, 3, 4, 5, 6, 7, 8, 9]);
