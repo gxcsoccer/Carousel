@@ -39,6 +39,7 @@ define(function(require, exports, module) {
 
 		this.__defineSetter__('currentIndex', function(val) {
 			var prev = this._currentIndex,
+				len = this.dataList.length,
 				that = this;
 			this._currentIndex = val;
 
@@ -46,11 +47,48 @@ define(function(require, exports, module) {
 				this.carouselList = this.getCurrentDataList();
 				this.$viewList.forEach(function($el, index) {
 					that.setItem($el, that.carouselList[index]);
+					$.data($el, 'index', index);
 					$el.css({
 						'-webkit-transform': that.itemPostionList[index],
 						width: that.itemWidth,
 						height: that.itemHeight
 					});
+				});
+			} else if ((prev + 1) % len == val) {
+				this.carouselList = this.getCurrentDataList();
+				this.$viewList.forEach(function($el) {
+					var index = $.data($el, 'index');
+					$el.removeClass('moveable');
+					$el[0].offsetLeft;
+					if (index == 0) {
+						that.setItem($el, that.carouselList[that.size + 1]);
+						index = that.size + 1;
+					} else {
+						$el.addClass('moveable');
+						index = index - 1;
+					}
+					$el.css({
+						'-webkit-transform': that.itemPostionList[index]
+					});
+					$.data($el, 'index', index);
+				});
+			} else {
+				this.carouselList = this.getCurrentDataList();
+				this.$viewList.forEach(function($el) {
+					var index = $.data($el, 'index');
+					$el.removeClass('moveable');
+					$el[0].offsetLeft;
+					if (index == that.size + 1) {
+						that.setItem($el, that.carouselList[0]);
+						index = 0;
+					} else {
+						$el.addClass('moveable');
+						index = index + 1;
+					}
+					$el.css({
+						'-webkit-transform': that.itemPostionList[index]
+					});
+					$.data($el, 'index', index);
 				});
 			}
 
@@ -73,10 +111,10 @@ define(function(require, exports, module) {
 
 	Carousel.prototype = {
 		next: function() {
-
+			this.currentIndex = this.currentIndex == (this.dataList.length - 1) ? 0 : (this.currentIndex + 1);
 		},
 		prev: function() {
-
+			this.currentIndex = this.currentIndex == 0 ? (this.dataList.length - 1) : (this.currentIndex - 1);
 		},
 		to: function(index) {},
 		show: function(list, index) {
