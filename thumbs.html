@@ -1,0 +1,153 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" id="view" content="width=device-width minimum-scale=1 maximum-scale=1" />
+    <title>CodingJack's 3D Carousel</title>
+    <link type="text/css" rel="stylesheet" href="css/packed.css" />
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.8.1.min.js"></script>
+    <script type="text/javascript" src="lib/Jacked.js"></script>
+    <script type="text/javascript" src="lib/packed.js"></script>
+    <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+</head>
+
+<body>
+    <div class="cj-wrapper">
+        <div class="cj-carousel" data-autoplay="true" data-animateIn="true" data-hoverShine="true" data-reflection="true" data-reflectAlpha="0.5" data-captionsAlwaysVisible="false" data-spacing="60" data-rotateX="-6" data-rotateZ="0" data-translateZ="-300" data-speed="0.1" data-threshold=".0025" data-fallbackColumns="4" data-fallbackSpacing="5" data-smartphonesUseFallback="true" data-smartphoneFallbackIsResponsive="true">
+            <div class="cj-container">
+                <figure>
+                    <div class="cj-thumb" data-url="http://codecanyon.net/user/CodingJack" data-target="_blank">
+                        <img src="img/pixel.gif" data-src="img/1.jpg" width="250" height="150" alt="CSS3 3D Carousel" />
+                        <div class="cj-caption">
+                            <div>
+                                <h3>CSS3 3D Transforms</h3>
+                                <p>This is some text and this is some more and this is some more</p>
+                            </div>
+                        </div>
+                    </div>
+                </figure>
+                <figure>
+                    <div class="cj-thumb" data-url="http://codecanyon.net/user/CodingJack" data-target="_blank">
+                        <img src="img/pixel.gif" data-src="img/2.jpg" width="250" height="150" alt="CSS3 3D Carousel" />
+                        <div class="cj-caption">
+                            <div>
+                                <h3>Firefox, Webkit & Android</h3>
+                            </div>
+                        </div>
+                    </div>
+                </figure>
+                <figure>
+                    <div class="cj-thumb" data-url="http://codecanyon.net/user/CodingJack" data-target="_blank">
+                        <img src="img/pixel.gif" data-src="img/3.jpg" width="250" height="150" alt="CSS3 3D Carousel" />
+                        <div class="cj-caption">
+                            <div>
+                                <h3>Thumbnail Grid Fallback</h3>
+                            </div>
+                        </div>
+                    </div>
+                </figure>
+                <figure>
+                    <div class="cj-thumb" data-url="http://codecanyon.net/user/CodingJack" data-target="_blank">
+                        <img src="img/pixel.gif" data-src="img/4.jpg" width="250" height="150" alt="CSS3 3D Carousel" />
+                        <div class="cj-caption">
+                            <div>
+                                <h3>Works on iPad/Android</h3>
+                            </div>
+                        </div>
+                    </div>
+                </figure>
+                <figure>
+                    <div class="cj-thumb" data-url="http://codecanyon.net/user/CodingJack" data-target="_blank">
+                        <img src="img/pixel.gif" data-src="img/5.jpg" width="250" height="150" alt="CSS3 3D Carousel" />
+                        <div class="cj-caption">
+                            <div>
+                                <h3>HTML5, CSS3 &amp; jQuery</h3>
+                                <p>This is some text and this is some more and this is some more</p>
+                            </div>
+                        </div>
+                    </div>
+                </figure>
+                <figure>
+                    <div class="cj-thumb" data-url="http://codecanyon.net/user/CodingJack" data-target="_blank">
+                        <img src="img/pixel.gif" data-src="img/6.jpg" width="250" height="150" alt="CSS3 3D Carousel" />
+                        <div class="cj-caption">
+                            <div>
+                                <h3>Animation Frame Rendering</h3>
+                            </div>
+                        </div>
+                    </div>
+                </figure>
+                <figure>
+                    <div class="cj-thumb" data-url="http://codecanyon.net/user/CodingJack" data-target="_blank">
+                        <img src="img/pixel.gif" data-src="img/7.jpg" width="250" height="150" alt="CSS3 3D Carousel" />
+                        <div class="cj-caption">
+                            <div>
+                                <h3>Powered by JACKED</h3>
+                                <p>CSS3 + requestAnimationFrame</p>
+                            </div>
+                        </div>
+                    </div>
+                </figure>
+                <figure>
+                    <div class="cj-thumb" data-url="http://codecanyon.net/user/CodingJack" data-target="_blank">
+                        <img src="img/pixel.gif" data-src="img/8.jpg" width="250" height="150" alt="CSS3 3D Carousel" />
+                        <div class="cj-caption">
+                            <div>
+                                <h3>Only on CodeCanyon!</h3>
+                            </div>
+                        </div>
+                    </div>
+                </figure>
+            </div>
+        </div>
+    </div>
+
+    <div id="top">
+
+        <input type="text" value="enter bg image url" />
+        <button>load</button>
+        <span class="color white"></span>
+        <span class="color black"></span>
+
+    </div>
+
+    <footer>
+
+        <div>
+
+            <span class="titleText">translateZ</span>
+            <div class="slidebar" id="translateZ"></div>
+            <div class="slidebar-text">-300</div>
+
+        </div>
+
+        <div>
+
+            <span class="titleText">rotateX</span>
+            <div class="slidebar" id="rotateX"></div>
+            <div class="slidebar-text">-6</div>
+
+        </div>
+
+        <div>
+
+            <span class="titleText">spacing</span>
+            <div class="slidebar" id="spacing"></div>
+            <div class="slidebar-text">60</div>
+
+        </div>
+
+        <div>
+
+            <span class="titleText">rotateZ</span>
+            <div class="slidebar" id="rotateZ"></div>
+            <div class="slidebar-text">0</div>
+
+        </div>
+
+    </footer>
+
+</body>
+
+</html>

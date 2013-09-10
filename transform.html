@@ -1,0 +1,225 @@
+<!DOCTYPE HTML>
+<html>
+
+    <head>
+    	
+        <meta charset="utf-8">
+    	<title>CSS3 Transforms w/ Jacked</title>
+    	
+        <style type="text/css">
+			
+			html, body {
+			
+				width: 100%;
+				height: 100%;
+				
+			}
+			
+			body {
+			
+				margin: 0;
+				
+			}
+			
+			#outer {
+			
+				position: fixed;
+				left: 0;
+				top: 0;
+				width: 200px;
+				height: 200px;
+				overflow: hidden;
+				visibility: hidden;
+				
+				-webkit-border-radius: 20px;
+				-moz-border-radius: 20px;
+				border-radius: 20px;
+				
+				-webkit-perspective: 1000;
+				-moz-perspective: 1000;
+				
+			}
+			
+			#inner {
+			
+				width: 200px;
+				height: 200px;
+				
+				background: #7db9e8;
+				background: -moz-radial-gradient(top, ellipse cover, #7db9e8 0%, #1e5799 100%);
+				background: -webkit-radial-gradient(top, ellipse cover, #7db9e8 0%, #1e5799 100%);
+				background: -o-radial-gradient(top, ellipse cover, #7db9e8 0%, #1e5799 100%);
+				background: -ms-radial-gradient(top, ellipse cover, #7db9e8 0%, #1e5799 100%);
+				background: radial-gradient(ellipse at top, #7db9e8 0%, #1e5799 100%);
+				filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#1e5799", endColorstr="#7db9e8", GradientType=1);
+				
+				-webkit-backface-visibility: hidden;
+				-moz-backface-visibility: hidden;
+				
+			}
+			
+			.origin-one {
+			
+				-ms-transform-origin: 25% 25%;
+				-webkit-transform-origin: 25% 25%; 
+				-moz-transform-origin: 25% 25%; 
+				-o-transform-origin: 25% 25%; 
+				transform-origin: 25% 25%;
+
+				
+			}
+			
+			.origin-two {
+			
+				-ms-transform-origin: 75% 75%;
+				-webkit-transform-origin: 75% 75%; 
+				-moz-transform-origin: 75% 75%; 
+				-o-transform-origin: 75% 75%; 
+				transform-origin: 75% 75%;
+				
+			}
+		
+		
+		</style>
+        
+        <script type="text/javascript" src="lib/Jacked.js"></script>
+        
+        <script type="text/javascript">
+			
+			var inner, wide, tall, scale, buffer, winWide, winTall, count = 1, points = 0, x, y, degree;
+			
+			function documentReady() {
+				
+				resize();
+				window.onresize = resize;
+				
+				inner = document.getElementById("inner");	
+				runIt(document.getElementById("outer"));
+				
+			}
+			
+			function runIt(el) {
+				
+				count = count ? 0 : 1;
+				(points < 4) ? points++ : points = 1;
+				
+				if(count) {
+				
+					scale = 1;
+					buffer = 200;
+					degree = 0;
+					inner.className = "origin-one";
+					
+				}
+				else {
+				
+					scale = 0.5;
+					buffer = 100;
+					degree = 180;
+					inner.className = "origin-two";
+					
+				}
+				
+				winWide = wide - buffer;
+				winTall = tall - buffer;
+				
+				switch(points) {
+				
+					case 1:
+					
+						x = (Math.random() * winWide) | 0;
+						y = winTall;
+					
+					break;
+					
+					case 2:
+					
+						x = count ? winWide : winWide - 50;
+						y = (Math.random() * winTall) | 0;
+					
+					break;
+					
+					case 3:
+					
+						x = (Math.random() * winWide) | 0;
+						y = count ? 0 : -50;
+					
+					break;
+					
+					case 4:
+					
+						x = count ? 0 : -50;
+						y = (Math.random() * winTall) | 0;
+					
+					break;
+					
+				}
+				
+				/*
+				
+					"Jacked.transform" is the same as "Jacked.tween" and can sumultaneously animate any number of CSS properties
+				    the only difference is "Jacked.transform" will always try to register as CSS3 and when not supported, 
+				    the fallback CSS will be animated using the regular requestAnimationFrame/timer engine 
+					
+					Here is more info about the engine (although I haven't updated it with this feature yet)
+					http://www.codingjack.com/playground/jacked/
+				
+				*/
+				
+				// native element
+				// document.getElementById.transform(css:Object, settings:Object = null, fallback:Object = null);
+				
+				// jQuery
+				// $(el).transform(css:Object, settings:Object = null, fallback:Object = null);
+				
+				// static calls below
+				
+				// the fallback is omitted here so nothing will happen if CSS3 transform isn't supported
+				Jacked.transform(inner, {transform: "rotateZ(" + degree + "deg) rotateY(-" + degree + "deg) rotateX(" + degree + "deg)"}, {
+					
+					duration: 2000,
+					ease: "Linear.easeNone",
+					
+				});
+				
+				// the last parameter here demonstrates the fallback
+				Jacked.transform(el, {transform: "translate(" + x + "px, " + y + "px) scale(" + scale + ", " + scale + ")"}, {
+					
+					duration: 2000,
+					ease: "Linear.easeNone",
+					callback: runIt
+					
+				}, {
+					
+					left: x, 
+					top: y, 
+					width: 200 * scale, 
+					height: 200 * scale
+					
+				});
+				
+				
+			}
+			
+			function resize() {
+			
+				wide = window.innerWidth || document.body.clientWidth;
+				tall = window.innerHeight || document.body.clientHeight;
+				
+			}
+		
+		</script>
+        
+    </head>
+    
+    <body onLoad="documentReady()">
+    	
+        <div id="outer">
+        
+        	<div id="inner"></div>
+            
+        </div>
+    
+    </body>
+    
+</html>
